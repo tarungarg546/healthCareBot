@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Facebook Login JavaScript Example</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> ></script> 
+<meta charset="UTF-8">
+<script type="text/javascript">
+  
+   var disease=  $("#query").val();
+
+   var medicine_suggestions = "http://www.truemd.in/api/medicine_suggestions/?id=" +  disease + 
+    "&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
+  
+   $.get( medicine_suggestions,function  (data , status) {
+     // body...  
+       console.log(data );
+       console.log(status);
+   });
+
+   
+   var medicine_details = "http://www.truemd.in/api/medicine_details/?id=" +  disease + 
+    "&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
+
+   $.get( medicine_details,function  (data , status) {
+     // body...  
+       console.log(data );
+       console.log(status);
+   });
+
+   var medicine_alternatives = "http://www.truemd.in/api/medicine_alternatives/?id=" +  disease + 
+    "&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
+  
+  $.get( medicine_alternatives ,function  (data , status) {
+     // body...  
+       console.log(data );
+       console.log(status);
+   });
+
+
+</script>
+
+<script type="text/javascript">
+  
+  
+</script>
+</head>
+
+
+
+<body>
+
+
+
+</body>
+</html>
