@@ -71,6 +71,8 @@ $(function(){
 				//console.log(data);
 				var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
 				$chat.append('<span class="normal" style=\"color:'+hue+';\"><b>'+data.nick+':-</b>'+data.msg+"</span><Br>");
+				var divid=document.getElementById('chat');
+				divid.scrollTop=divid.scrollHeight;
 		});
 		socket.on('whisper',function(data){
 				var audioElement = document.createElement('audio');
