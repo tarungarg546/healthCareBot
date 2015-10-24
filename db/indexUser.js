@@ -84,7 +84,7 @@ User.requestAmbulance=function(req,res){
 					      type : "Point",
 					      coordinates : [longitude,latitude]
 					    },
-					    $maxDistance : 30000
+					    $maxDistance : 100000
 					  }
 				};
 				console.log(query);
@@ -94,6 +94,7 @@ User.requestAmbulance=function(req,res){
 					else{
 						console.log(result);
 						async.eachSeries(result,function(dataSingle,next){
+							var msg='Hello '+dataSingle.name+","+data.concernName+' needs you at '+data.concernAddress+' Issued in public interest by :- '+data.yourName+" Sponsored by HealersAtHome(https://www.healersathome.com)..:D";
 							async.parallel([
 								function(done){
 									//mail
@@ -101,7 +102,7 @@ User.requestAmbulance=function(req,res){
 									    from: 'Tarun Garg <tarungarg546@gmail.com>', // sender address
 									    to: dataSingle.mail, // list of receivers
 									    subject: 'Someone Needs you', // Subject line
-									    text: data.concernName+' Needs you at '+data.concernAddress+' Issued in public interest by:-'+data.yourName+'Sponsored by HealersAtHome(healersathome.com)..:D'
+									    text:msg
 									};
 						    		// send mail with defined transport object
 									transporter.sendMail(mailOptions, function(error, info){
@@ -118,7 +119,7 @@ User.requestAmbulance=function(req,res){
 									client.sendMessage({
 							            to:'+919802893707', // Any number Twilio can deliver to
 							            from: '+16572208653', // A number you bought from Twilio and can use for outbound communication
-							            body: data.concernName+' Needs you at '+data.concernAddress+' Issued in public interest by:-'+data.yourName+'Sponsored by HealersAtHome(healersathome.com)..:D' // body of the SMS message
+							            body:msg
 							        }, function(err, responseData) { //this function is executed when a response is received from Twilio
 							            if(err)
 							             return done(err);
