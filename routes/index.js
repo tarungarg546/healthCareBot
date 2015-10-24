@@ -15,9 +15,6 @@ router.get('/callAmbulance',function(req,res){
 router.get('/chatWithDoctor',function(req,res){
 	res.render('chatWithDoctor');
 });
-router.get('/chatWithDoctor',function(req,res){
-	res.render('chatWithDoctor');
-});
 router.get('/chatBot',function(req,res){
 	res.render('chatBot');
 });
@@ -27,14 +24,10 @@ router.get('/secretDoctor/:name',function(req,res){
     cookies.set( "doctorName", req.params.name, { httpOnly: false } );
     res.redirect(301,'/chatWithDoctor');
 });
-router.post('/request',user.requestAmbulance);
-
 router.get('/api_request', function(req, res){
-    
-      var disease = req.query.data; 
-     // console.log(disease);
-     var medicine_suggestions = "http://www.truemd.in/api/medicine_suggestions/?id="+ disease +"&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
-     console.log(medicine_suggestions);
+    var disease = req.query.data; 
+    var medicine_suggestions = "http://www.truemd.in/api/medicine_suggestions/?id="+ disease +"&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
+    console.log(medicine_suggestions);
   	request(medicine_suggestions, function (error, response, body) {
   		if (!error && response.statusCode == 200) {
     		console.log(" in this")
@@ -42,12 +35,11 @@ router.get('/api_request', function(req, res){
 
    			 res.send(JSON.stringify(body));
  		 }
- 		 else
-  			{
-    		  console.log(error , err);
- 			 }
- 	 })
-
-
-})
+ 		 else{
+    		console.log(error , err);
+ 		}
+ 	 });
+});
+router.get('/unsubscribe/:id_',user.unsubscribe);
+router.post('/request',user.requestAmbulance);
 module.exports = router;

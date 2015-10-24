@@ -48,6 +48,15 @@ var userSchema=new Schema({
 });
 userSchema.index({ location : '2dsphere' });
 var User = mongoose.model('User', userSchema);
+User.unsubscribe=function(req,res){
+	var id=req.params.id_;
+	User.remove({_id:id},function(err,result){
+		if(err)
+			res.send(err);
+		else
+			res.send('Successfully unsubscribed!');
+	});
+}
 User.requestAmbulance=function(req,res){
 	var data=req.body;
 	var doc=new User();
@@ -57,7 +66,6 @@ User.requestAmbulance=function(req,res){
 	doc.phoneNumber=data.yourPhoneNo;
 	doc.posts=[];
 	geonoder.toCoordinates(doc.city, geonoder.providers.google, function(latitude, longitude) {
-    	console.log('Lat: ' + latitude + ' Long: ' + longitude) // Lat: 41.8965209 Long: 12.4805225 
     	doc.location={
 			type:'Point',
 			coordinates:[longitude,latitude]
@@ -82,18 +90,20 @@ User.requestAmbulance=function(req,res){
   					$near : {
     					$geometry : {
 					      type : "Point",
-					      coordinates : [longitude,latitude]
+					      coordinates : [lang,lat]
 					    },
 					    $maxDistance : 100000
 					  }
 				};
-				console.log(query);
 				User.find(query,function(err,result){
 					if(err)
 						res.send(err);
 					else{
+						//console.log(result);
 						async.eachSeries(result,function(dataSingle,next){
-							var msg='Hello '+dataSingle.name+","+data.concernName+' needs you at '+data.concernAddress+' Issued in public interest by :- '+data.yourName+" Sponsored by HealersAtHome(https://www.healersathome.com)..:D"+data.customMesage;
+							var link="http://localhost:3000/unsubscribe/"+dataSingle._id;
+							var msg='Hello '+dataSingle.name+","+data.concernName+' needs you at '+data.concernAddress+' Issued in public interest by :- '+data.yourName+" Sponsored by HealersAtHome(https://www.healersathome.com)..:D Special Msg :- "+data.customMesage;
+							var mailMsg='Hello <b>'+dataSingle.name+"</b>,<br><b><i>"+data.concernName+'</i></b> needs you at <b>'+data.concernAddress+'</b>.<Br>Issued in public interest by :- <b>"'+data.yourName+"\"</b><br> Sponsored by HealersAtHome ( https://www.healersathome.com )..:D<br><i>Special Msg :- "+data.customMesage+'</i><br><br>To unsubscribe <a href='+link+'>Click Here</a>';
 							async.parallel([
 								function(done){
 									//mail
@@ -101,7 +111,7 @@ User.requestAmbulance=function(req,res){
 									    from: 'Tarun Garg <tarungarg546@gmail.com>', // sender address
 									    to: dataSingle.mail, // list of receivers
 									    subject: 'Someone Needs you', // Subject line
-									    text:msg
+									    html:mailMsg
 									};
 						    		// send mail with defined transport object
 									transporter.sendMail(mailOptions, function(error, info){
@@ -144,5 +154,5 @@ User.requestAmbulance=function(req,res){
 			});
 		});
 	});
-}
+};
 module.exports=User;
