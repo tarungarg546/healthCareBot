@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Call Ambulance</title>
@@ -15,29 +14,22 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <script>
-  var data = <%- JSON.stringify(invite) %>
-  console.log(data);
-  if(data)
-  {
-    //data is true
-    alert('Your Request has been forwarded to our consumer base.');
-    win
-    dow.location('/',"_self");
-  }
-  </script>
 </head>
 <body>
   <nav class="light-blue lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img src="images/logo.png"></a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/chatWithDoctor">Chat With A Doctor</a></li>
+        <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="/chatWithDoctor">Chat With A Doctor</a></li>
+        <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
       </ul>
 
+
+
+		</li>
+      </ul>
 
       <ul class="right hide-on-med-and-down">
         <li><a href="/callAmbulance">Call Ambulance</a></li>
@@ -47,11 +39,11 @@
         <li><a href="/callAmbulance">Call Ambulance</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/chatBot">Chat Bot</a></li>
+        <li><a href="/chatBot">Medicine Recommendations Bot</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="/chatBot">Chat Bot</a></li>
+        <li><a href="/chatWithBot">Medicine Recommendations Bot</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
