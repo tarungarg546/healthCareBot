@@ -16,6 +16,39 @@ var chat = io.of('/doctor').on('connection', function (socket) {
 			//console.log(users[socket.name]);
 			updateNames();
         });
+        socket.on('newMessage',function(data,callback){
+			console.log(data);
+			var msg=data.trim();
+			if(msg[0]=='@')//if thats whisper or private msg
+			{
+				msg=msg.substr(1);//start of name onwards
+				var idx=msg.indexOf(' ');
+				if(idx!==-1)
+				{
+					//check the username is valid
+					var name=msg.substr(0,idx);
+					msg=msg.substr(idx+1);
+					if(name in users)
+					{
+						users[name].emit('whisper',{msg:msg,nick:socket.name});
+						console.log('whispered');	
+					}
+					else
+					{
+						callback('Error! You can only send a private msg to doctor');
+					}	
+				}
+				else//no actual msg part
+				{
+					callback('Error! Please enter a message for your whisper');
+				}
+			}
+			else{
+
+				io.of('/client').emit('newmessage',{msg:msg,nick:socket.name});//broadcast to everyone and i too can see the msg
+				io.of('/doctor').emit('newmessage',{msg:msg,nick:socket.name});//broadcast to everyone and i too can see the msg
+			}
+		});
 		socket.on('disconnect',function(data){
 			console.log('User died');
 			if(!socket.name)//when the user has no name 
