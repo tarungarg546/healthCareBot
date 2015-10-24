@@ -8,6 +8,7 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 router.get('/callAmbulance',function(req,res){
-	res.render('callAmbulance');
+	res.render('callAmbulance',{invite:false});
 });
+router.post('/request',user.requestAmbulance);
 module.exports = router;

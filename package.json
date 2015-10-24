@@ -4,7 +4,7 @@
   "description": "app for healerathome.com at coworks hackathon delhi",
   "main": "index.js",
   "scripts": {
-    "start":"node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -13,6 +13,7 @@
     "body-parser": "^1.14.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
+    "geonoder": "^0.1.0",
     "mongoose": "^4.1.8",
     "nodemailer": "^1.5.0",
     "request": "^2.64.0",
