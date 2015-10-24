@@ -10,5 +10,14 @@ router.get('/', function(req, res) {
 router.get('/callAmbulance',function(req,res){
 	res.render('callAmbulance',{invite:false});
 });
+router.get('/chatWithDoctor',function(req,res){
+	res.render('chatWithDoctor');
+});
+router.get('/chatWithDoctor',function(req,res){
+	res.render('chatWithDoctor');
+});
+router.get('/chatBot',function(req,res){
+	res.render('chatBot');
+});
 router.post('/request',user.requestAmbulance);
 module.exports = router;

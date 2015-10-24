@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Come Chat with doctor</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  	<!-- CSS  -->
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  	<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  	<link href="css/style2.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+	<div class="overlay">
+		<div class="container overlayContainer">
+			<p class="flow-text">Enter your username</p>
+			<p id="error" style="display:none;">Sorry this username is already taken</p>
+			<form class="col s12" id="setUserName">
+				<div class="row">
+					<div class="input-field col s12">
+	            		<input id="username" type="text" class="validate" required>
+		                <label for="username">Username</label>
+	           		</div>
+				</div>
+				<div class="row">
+		            <div class="col m12">
+		                <p class="right-align">                                
+		                	<button class="btn btn-large waves-effect waves-light" type="submit">Get Me In</button>
+		                </p>
+		            </div>
+		         </div>
+			</form>
+		</div>
+	</div>
+	<div id="content" style="display:none;">
+		<div id="chatwrap">
+			<div id="chat"></div>
+			<form id="sendmessage">
+				<input type="text" id="message"/>
+				<input type="submit"/>
+			</form>
+		</div>
+		<div id="=doctors"></div>
+	</div>
+</body>
+<script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var socket=io.connect();
+		var $form=$('#setUserName');
+		var $nickbox=$('#username');
+		var $sendForm=$('#sendmessage');
+		var $msg=$('#message'),
+			$chat=$('#chat');
+		$form.submit(function(ev){
+			ev.preventDefault();
+			var ran=document.getElementById('username');
+			if($nickbox.val()=='' || $nickbox.val()==" "||ran.value.indexOf(' ') >= 0)
+			{
+				alert("Dont try to be witty man!");
+				return false;
+			}
+			socket.emit('newUser',$nickbox.val(),function(data){
+				if(data){
+					$('.overlay').fadeOut();
+					$('#content').fadeIn();
+				}
+				else
+				{
+					$nickbox.addClass('invalid');
+					$('#error').show();
+				}
+			});
+			$nickbox.val('');
+
+		});
+		$sendForm.submit(function(ev){
+			ev.preventDefault();
+			socket.emit('newMessage',$msg.val(),function(data){
+				$('#chat').append('<span class="error"><b>'+data+"</span><Br>");
+			});
+			$msg.val('');
+
+		});
+		socket.on('newmessage',function(data){
+				//console.log(data);
+				$chat.append('<span class="normal"><b>'+data.nick+':-</b>'+data.msg+"</span><Br>");
+		});
+		socket.on('whisper',function(data){
+				$chat.append('<span class="whisper"><b>'+data.nick+':-</b>'+data.msg+"</span><Br>");
+		});
+		socket.on('usernames',function(data){
+				var str=' ';
+				for(var i=0;i<data.length;i++)
+				{
+					str+=data[i]+'<br/>';
+				}
+				$('#doctors').html(str);
+		});
+	})
+</script>
+</html>
