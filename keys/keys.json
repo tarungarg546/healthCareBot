@@ -1,8 +1,4 @@
 {
-	"goibibo":{
-		"applicationKey":"f1bf2b72254364d2a13d1ef5f800aedf",
-		"applicationId":"48fc71b4"
-	},
 	"gmail":{
 		"user": "tarungarg546@gmail.com",
         "password": "laxauwftxfcvfwty"
@@ -12,6 +8,6 @@
 		"key2":"031bba489a2f19d928e0ab856f1e1265"
 	},
 	"mongoose":{
-		"url":"mongodb://neovivek:neovivek@ds039504.mongolab.com:39504/neovivek"
+		"url":"mongodb://mangoPeople:mangoPeople@ds039504.mongolab.com:39504/cohack"
 	}
 }
