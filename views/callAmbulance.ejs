@@ -27,22 +27,7 @@
       <ul id="nav-mobile" class="side-nav">
         <li><a href="#">Chat With A Doctor</a></li>
       </ul>
-	  <ul class="right hide-on-med-and-down">
-        <li>
-  <a class='dropdown-button'  data-beloworigin="true" href='#' data-activates='dropdown1'>Statistics</a>
 
-  <!-- Dropdown Structure -->
-  <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="statsByTime">By Time</a></li>
-
-    <li><a href="statsByLocation">By Location</a></li>
-
-
-  </ul>
-
-
-		</li>
-      </ul>
 
       <ul class="right hide-on-med-and-down">
         <li><a href="/check">Call Ambulance</a></li>
@@ -61,20 +46,16 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center orange-text">Call Ambulance</h1>
 
-      <br><br>
-
-    </div>
-  </div>
 
 
   <div class="container">
+
       <div class="row">
-          <div class="col s5 l5" style="border:1px solid green;margin-right:10px;">
+        <div class="col l12 s12">
+            <img src="images/ambulance.png" id="ambulanceLogo" height="70px">
+        </div>
+          <div class="col s5 l5" style="border:0px solid green;margin-right:10px;">
                 <h4>Your Details</h4>
               <form action="/request" method="post">
             <div class="row">
@@ -111,16 +92,16 @@
             </div>
 
           </div>
-          <div class="col s6 l6" style="border:1px solid green;" id="patientData" >
+          <div class="col s6 l6" style="border:0px solid green;" id="patientData" >
                <h4>Patients Details</h4>
           <div class="row">
             <div class="input-field col s6">
               <input type="text"  id="concernName" name="concernName" class="validate" required>
               <label for="textarea1">Concern Persons name</label>
             </div>
-            <div class="input-field col s6">
-              <input type="email"  id="concernMail" name="concernMail" class="validate">
-              <label for="textarea1">Concern Persons Email</label>
+          <div class="input-field col s6">
+              <input type="tel"  id="concernPhoneNo" name="concernPhoneNo" class="validate">
+              <label for="textarea1">Concern Persons Phone</label>
             </div>
           </div>
 
@@ -168,6 +149,12 @@
          $('#patientData').show('slow', function() {
              $( "#nxtbtn" ).hide();
          });
+    });
+    $('#nxtbtn').click(function() {
+      console.log('amb');
+      $('#ambulanceLogo').animate({'marginLeft' : "+=500px"},5000);
+
+
     });
   </script>
 
