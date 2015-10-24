@@ -58,31 +58,22 @@
       <div class="col l4 s4">.</div>
       <div class="col l4 s4">
 
-        <form id="target"><input   type="text" id="query" placeholder="What Illness Are You Feeling Today?" class="validate">
+        <form id="target"><input    type="text" id="query" placeholder="What Illness Are You Feeling Today?" class="validate">
           <button class="btn waves-effect waves-light" type="submit">Suggest Me Medicine</button></form></center>
           <script type="text/javascript">
 
-          $( "#target" ).submit(function( event ) {
-            console.log('vipin');
-
-
-
-              $.ajax({
-                url: 'https://api.infermedica.com/v1/lookup?phrase=headache',
-                type: 'GET',
-                dataType: 'json',
-                success: function() { alert('hello!'); },
-                error: function() { alert('boo!'); },
-                beforeSend: setHeader
-              });
-
-
-            function setHeader(xhr) {
-              xhr.setRequestHeader('app_id', 'ae4d86f4');
-              xhr.setRequestHeader('app_key', 'dd778d8e8801937359328860808ef49b');
-}
-
+          $("#target" ).submit(function( event ) {
+          
             event.preventDefault();
+
+
+              var disease = $("#query").val();
+              $.get("api_request" , { "data" : disease} , function( data , status){
+
+                   console.log( data );
+              })
+
+            
             });
 
 
