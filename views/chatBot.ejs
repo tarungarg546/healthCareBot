@@ -58,31 +58,33 @@
       <div class="col l4 s4">.</div>
       <div class="col l4 s4">
 
-        <form id="target"><input   type="text" id="query" placeholder="What Illness Are You Feeling Today?" class="validate">
+        <form id="target"><input    type="text" id="query" placeholder="What Illness Are You Feeling Today?" class="validate">
           <button class="btn waves-effect waves-light" type="submit">Suggest Me Medicine</button></form></center>
           <script type="text/javascript">
 
-          $( "#target" ).submit(function( event ) {
-            console.log('vipin');
-
-
-
-              $.ajax({
-                url: 'https://api.infermedica.com/v1/lookup?phrase=headache',
-                type: 'GET',
-                dataType: 'json',
-                success: function() { alert('hello!'); },
-                error: function() { alert('boo!'); },
-                beforeSend: setHeader
-              });
-
-
-            function setHeader(xhr) {
-              xhr.setRequestHeader('app_id', 'ae4d86f4');
-              xhr.setRequestHeader('app_key', 'dd778d8e8801937359328860808ef49b');
-}
-
+          $("#target" ).submit(function( event ) {
+          
             event.preventDefault();
+
+
+              var disease = $("#query").val();
+              $.get("api_request" , { "data" : disease} , function( data , status){
+
+                //   console.log( data );
+                   var data1 = JSON.parse(data);
+                   data1=JSON.parse(data1);
+                  
+                   $("#api_result").append( " <center><h4><i class='material-icons'>android</i>&nbsp;I suggest you the following medicines&nbsp;</h4></center>" );
+                   for( x in data1.response.suggestions)
+                   {       
+                           console.log(data1.response.suggestions[x].suggestion);
+
+                           $("#api_result").append( "<div class='col s12 l12'><center>" +  data1.response.suggestions[x].suggestion + "</center></div>" );
+                   }
+                //   console.log(data1.response.suggestions[0]);
+              })
+
+            
             });
 
 
@@ -92,9 +94,16 @@
 
 
           </script>
+           
+
         </div>
+
       </div>
+      <div class="row" id="api_result">
+
+           </div>
     </div>
+
 
 
     <!--  Scripts-->
