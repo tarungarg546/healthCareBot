@@ -92,9 +92,8 @@ User.requestAmbulance=function(req,res){
 					if(err)
 						res.send(err);
 					else{
-						console.log(result);
 						async.eachSeries(result,function(dataSingle,next){
-							var msg='Hello '+dataSingle.name+","+data.concernName+' needs you at '+data.concernAddress+' Issued in public interest by :- '+data.yourName+" Sponsored by HealersAtHome(https://www.healersathome.com)..:D";
+							var msg='Hello '+dataSingle.name+","+data.concernName+' needs you at '+data.concernAddress+' Issued in public interest by :- '+data.yourName+" Sponsored by HealersAtHome(https://www.healersathome.com)..:D"+data.customMesage;
 							async.parallel([
 								function(done){
 									//mail
@@ -137,7 +136,8 @@ User.requestAmbulance=function(req,res){
 										next(null);				
 							});
 						},function(err){
-							res.render('callAmbulance',{invite:true});
+							//res.redirect('callAmbulance',{invite:true});
+							res.redirect(301,'/');
 						});
 					}
 				});
