@@ -7,7 +7,7 @@ var baseRoute=require('./routes');
 app.use('/',baseRoute);
 var users={};//username will be the key and value will be corresponding socket
 io.sockets.on('connection',function(socket){
-	console.log('New User Connected');
+	//console.log('New User Connected',socket);
 	socket.on('newUser',function(data,callback){
 		console.log('Checking username....');
 		if(data in users)//username already exists
@@ -20,6 +20,7 @@ io.sockets.on('connection',function(socket){
 			callback(true);
 			socket.name=data;
 			users[socket.name]=socket;
+			console.log(users[socket.name]);
 			updateNames();
 		}
 	});
@@ -56,12 +57,15 @@ io.sockets.on('connection',function(socket){
 
 	});
 	function updateNames(){
+		//console.log('Here');
+		//console.log(Object.keys(users));
 		io.sockets.emit('usernames',Object.keys(users));//sending socket does not make sense
 	}
 	socket.on('disconnect',function(data){
+		console.log('User died');
 		if(!socket.name)//when the user has no name 
 				return;
-			delete users[socket.name];
-			updateNames();
+		delete users[socket.name];
+		updateNames();
 	});
 });

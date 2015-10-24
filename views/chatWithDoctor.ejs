@@ -14,6 +14,35 @@
   	<link href="css/style2.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
+	<nav class="light-blue lighten-1" role="navigation">
+    	<div class="nav-wrapper container">
+    		<a id="logo-container" href="#" class="brand-logo">
+    			<img src="images/logo.png">
+    		</a>
+      		<ul class="right hide-on-med-and-down">
+	        	<li>
+	        		<a href="/chatWithDoctor">Chat With A Doctor</a>
+	        	</li>
+      		</ul>
+      		<ul id="nav-mobile" class="side-nav">
+        		<li><a href="/chatWithDoctor">Chat With A Doctor</a></li>
+      		</ul>
+	      	<ul class="right hide-on-med-and-down">
+	        	<li><a href="/callAmbulance">Call Ambulance</a></li>
+	      	</ul>
+
+      		<ul id="nav-mobile" class="side-nav">
+        		<li><a href="/callAmbulance">Call Ambulance</a></li>
+      		</ul>
+      		<ul class="right hide-on-med-and-down">
+        		<li><a href="/chatBot">Chat Bot</a></li>
+      		</ul>
+      		<ul id="nav-mobile" class="side-nav">
+        		<li><a href="/chatWithBot">Chat Bot</a></li>
+      		</ul>
+      		<a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    	</div>
+  	</nav>
 	<div class="overlay">
 		<div class="container overlayContainer">
 			<p class="flow-text">Enter your username</p>
@@ -39,22 +68,51 @@
 		<div id="chatwrap">
 			<div id="chat"></div>
 			<form id="sendmessage">
-				<input type="text" id="message"/>
-				<input type="submit"/>
+				<div class="row">
+					<div id='msgType 'class="input-field col s12" style="margin-top:0em;">
+	           			<input id="message" type="text" class="validate" required>
+		            	<label for="message">Enter Your Message</label>
+	       			</div>
+	       			<div class="col s6 offset-s6">                    
+		            	<button class="btn waves-effect waves-light" type="submit">Send!
+							<i class="material-icons right">send</i>
+		            	</button>
+		        	</div>
+	       		</div>
 			</form>
 		</div>
-		<div id="=doctors"></div>
+		<div id="doctorsView">
+			<p class="flow-text" style="border-bottom:1px solid black;">Doctors Online</p>
+			<div id="doctor">
+				
+			</div>
+		</div>
 	</div>
 </body>
 <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
 <script type="text/javascript">
 	$(function(){
+		$("#msgType").keypress(function(event) {
+    		if (event.which == 13) {
+        		event.preventDefault();
+        		$("#sendmessage").submit();
+    		}
+		});
+		$(window).resize(function() {
+    		setHeightWidth();
+  		});
+  		function setHeightWidth(){
+  			$chat.css('height', $(window).innerHeight()-170);
+			$('#chatwrap').css('width',$(window).innerWidth()-216);
+  		}
 		var socket=io.connect();
 		var $form=$('#setUserName');
 		var $nickbox=$('#username');
 		var $sendForm=$('#sendmessage');
 		var $msg=$('#message'),
 			$chat=$('#chat');
+		$chat.css('height', $(window).innerHeight()-170);
+		$('#chatwrap').css('width',$(window).innerWidth()-216);
 		$form.submit(function(ev){
 			ev.preventDefault();
 			var ran=document.getElementById('username');
@@ -87,18 +145,35 @@
 		});
 		socket.on('newmessage',function(data){
 				//console.log(data);
-				$chat.append('<span class="normal"><b>'+data.nick+':-</b>'+data.msg+"</span><Br>");
+				var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+				$chat.append('<span class="normal" style=\"color:'+hue+';\"><b>'+data.nick+':-</b>'+data.msg+"</span><Br>");
 		});
 		socket.on('whisper',function(data){
+				var audioElement = document.createElement('audio');
+			    audioElement.setAttribute('src', 'music/tone.wav');
+			    audioElement.addEventListener('ended', function() {
+			        this.currentTime = 0;
+			        this.play();
+			    }, false);
+			    //$('#play').click(function() {
+			    audioElement.play();
+			    //});
+			    
+			 	setInterval(function(){
+			 		$(window).focus(function(){
+			 			console.log('Here');
+			 			audioElement.pause();
+			 		})
+			 	},100);
 				$chat.append('<span class="whisper"><b>'+data.nick+':-</b>'+data.msg+"</span><Br>");
 		});
 		socket.on('usernames',function(data){
 				var str=' ';
+				$("#doctor").html('');
 				for(var i=0;i<data.length;i++)
 				{
-					str+=data[i]+'<br/>';
+					$('#doctor').append('<span class="inDoctor">'+data[i]+'</span><br>');
 				}
-				$('#doctors').html(str);
 		});
 	})
 </script>
