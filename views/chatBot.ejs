@@ -73,11 +73,13 @@
                 //   console.log( data );
                    var data1 = JSON.parse(data);
                    data1=JSON.parse(data1);
+                  
+                   $("#api_result").append( " <center><h4><i class='material-icons'>android</i>&nbsp;I suggest you the following medicines&nbsp;</h4></center>" );
                    for( x in data1.response.suggestions)
                    {       
                            console.log(data1.response.suggestions[x].suggestion);
 
-                           $("#api_result").append( "<br>" +  data1.response.suggestions[x].suggestion  );
+                           $("#api_result").append( "<div class='col s12 l12'><center>" +  data1.response.suggestions[x].suggestion + "</center></div>" );
                    }
                 //   console.log(data1.response.suggestions[0]);
               })
@@ -92,10 +94,14 @@
 
 
           </script>
-           <div id="api_result"></div>
+           
 
         </div>
+
       </div>
+      <div class="row" id="api_result">
+
+           </div>
     </div>
 
 
