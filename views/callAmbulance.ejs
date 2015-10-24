@@ -1,1 +1,175 @@
-Call ambulance Page
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Call Ambulance</title>
+  <!-- Compiled and minified JavaScript -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+     <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><img src="images/logo.png"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Chat With A Doctor</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Chat With A Doctor</a></li>
+      </ul>
+	  <ul class="right hide-on-med-and-down">
+        <li>
+  <a class='dropdown-button'  data-beloworigin="true" href='#' data-activates='dropdown1'>Statistics</a>
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="statsByTime">By Time</a></li>
+
+    <li><a href="statsByLocation">By Location</a></li>
+
+
+  </ul>
+
+
+		</li>
+      </ul>
+
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/check">Call Ambulance</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="/check">Call Ambulance</a></li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Chat Bot</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Chat Bot</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center orange-text">Call Ambulance</h1>
+
+      <br><br>
+
+    </div>
+  </div>
+
+
+  <div class="container">
+      <div class="row">
+          <div class="col s5 l5" style="border:1px solid green;margin-right:10px;">
+                <h4>Your Details</h4>
+              <form action="/request" method="post">
+            <div class="row">
+              <div class="input-field col s6">
+                <input type="text"  id="yourName" name="yourName" class="validate" required>
+                <label for="textarea1">Your Name</label>
+              </div>
+              <div class="input-field col s6">
+                <input type="text"  id="yourCity" name="yourCity" class="validate" required>
+                <label for="textarea1">Your City</label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s6">
+                <input type="email"  id="yourMail" name="yourMail" class="validate" required>
+                <label for="textarea1">Your Email</label>
+              </div>
+              <div class="input-field col s6">
+                <input type="tel" size="10" id="yourPhoneNo" name="yourPhoneNo" class="validate" required>
+                <label for="textarea1">Your Phone No</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+
+              </div>
+
+              <div class="input-field col s6">
+                <button class="btn waves-effect waves-light" id="nxtbtn">Next
+                    <i class="material-icons right"></i></button>
+
+              </div>
+            </div>
+
+          </div>
+          <div class="col s6 l6" style="border:1px solid green;" id="patientData" >
+               <h4>Patients Details</h4>
+          <div class="row">
+            <div class="input-field col s6">
+              <input type="text"  id="concernName" name="concernName" class="validate" required>
+              <label for="textarea1">Concern Persons name</label>
+            </div>
+            <div class="input-field col s6">
+              <input type="email"  id="concernMail" name="concernMail" class="validate">
+              <label for="textarea1">Concern Persons Email</label>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="input-field col s12">
+              <textarea  id="concernAddress" name="concernAddress"  class="materialize-textarea"></textarea>
+              <label for="textarea1">Concern Perons Address</label>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="input-field col s12">
+              <textarea  id="customMesage" name="customMesage"  class="materialize-textarea"></textarea>
+              <label for="textarea1">Special Request</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+
+            </div>
+            <div class="input-field col s6">
+              <button class="btn waves-effect waves-light" type="submit">Call Ambulance
+                  <i class="material-icons right"></i></button>
+                </form>
+            </div>
+          </div>
+          </div>
+      </div>
+  </div>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script>
+  $( "#patientData" ).hide();
+  $( "#nxtbtn" ).click(function(e) {
+        console.log('cLICKED');
+        e.preventDefault();
+
+        //$( "#patientData" ).css( "visibility", "visible" );
+
+         $('#patientData').show('slow', function() {
+             $( "#nxtbtn" ).hide();
+         });
+    });
+  </script>
+
+  </body>
+</html>
