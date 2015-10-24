@@ -1,0 +1,19 @@
+{
+  "name": "healersathome",
+  "version": "0.0.1",
+  "description": "app for healerathome.com at coworks hackathon delhi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tarungarg546/HealersAtHome.git"
+  },
+  "author": "Team MangoPeople",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tarungarg546/HealersAtHome/issues"
+  },
+  "homepage": "https://github.com/tarungarg546/HealersAtHome#readme"
+}
