@@ -8,8 +8,8 @@
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-     <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -28,60 +28,79 @@
 
 
 
-		</li>
-      </ul>
+    </li>
+  </ul>
 
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/callAmbulance">Call Ambulance</a></li>
-      </ul>
+  <ul class="right hide-on-med-and-down">
+    <li><a href="/callAmbulance">Call Ambulance</a></li>
+  </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="/callAmbulance">Call Ambulance</a></li>
-      </ul>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/chatBot">Medicine Recommendations Bot</a></li>
-      </ul>
+  <ul id="nav-mobile" class="side-nav">
+    <li><a href="/callAmbulance">Call Ambulance</a></li>
+  </ul>
+  <ul class="right hide-on-med-and-down">
+    <li><a href="/chatBot">Medicine Recommendations Bot</a></li>
+  </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="/chatWithBot">Medicine Recommendations Bot</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+  <ul id="nav-mobile" class="side-nav">
+    <li><a href="/chatWithBot">Medicine Recommendations Bot</a></li>
+  </ul>
+  <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+</div>
+</nav>
 
 
 
-  <div class="container">
+<div class="container">
 
-      <div class="row">
-    
+  <div class="row">
+    <center><h4><i class="material-icons">android</i>&nbsp;Hi! I'm Your Medical Bot&nbsp;<i class="material-icons">android</i></h4>
+      <div class="col l4 s4">.</div>
+      <div class="col l4 s4">
+
+        <form id="target"><input   type="text" id="query" placeholder="What Illness Are You Feeling Today?" class="validate">
+          <button class="btn waves-effect waves-light" type="submit">Suggest Me Medicine</button></form></center>
+          <script type="text/javascript">
+
+          $( "#target" ).submit(function( event ) {
+            console.log('vipin');
+
+
+
+              $.ajax({
+                url: 'https://api.infermedica.com/v1/lookup?phrase=headache',
+                type: 'GET',
+                dataType: 'json',
+                success: function() { alert('hello!'); },
+                error: function() { alert('boo!'); },
+                beforeSend: setHeader
+              });
+
+
+            function setHeader(xhr) {
+              xhr.setRequestHeader('app_id', 'ae4d86f4');
+              xhr.setRequestHeader('app_key', 'dd778d8e8801937359328860808ef49b');
+}
+
+            event.preventDefault();
+            });
+
+
+
+
+
+
+
+          </script>
+        </div>
       </div>
-  </div>
+    </div>
 
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
-  <script>
-  $( "#patientData" ).hide();
-  $( "#nxtbtn" ).click(function(e) {
-        console.log('cLICKED');
-        e.preventDefault();
-
-        //$( "#patientData" ).css( "visibility", "visible" );
-
-         $('#patientData').show('slow', function() {
-             $( "#nxtbtn" ).hide();
-         });
-    });
-    $('#nxtbtn').click(function() {
-      console.log('amb');
-      $('#ambulanceLogo').animate({'marginLeft' : "+=500px"},5000);
-
-
-    });
-  </script>
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
 
   </body>
-</html>
+  </html>
