@@ -70,7 +70,16 @@
               var disease = $("#query").val();
               $.get("api_request" , { "data" : disease} , function( data , status){
 
-                   console.log( data );
+                //   console.log( data );
+                   var data1 = JSON.parse(data);
+                   data1=JSON.parse(data1);
+                   for( x in data1.response.suggestions)
+                   {       
+                           console.log(data1.response.suggestions[x].suggestion);
+
+                           $("#api_result").append( "<br>" +  data1.response.suggestions[x].suggestion  );
+                   }
+                //   console.log(data1.response.suggestions[0]);
               })
 
             
@@ -83,9 +92,12 @@
 
 
           </script>
+           <div id="api_result"></div>
+
         </div>
       </div>
     </div>
+
 
 
     <!--  Scripts-->
