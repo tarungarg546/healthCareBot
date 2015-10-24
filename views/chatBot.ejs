@@ -74,12 +74,12 @@
                    var data1 = JSON.parse(data);
                    data1=JSON.parse(data1);
 
-                   $("#api_result").append( " <center><h4 ><i class='material-icons'><p> android</i>&nbsp;I suggest you the following medicines&nbsp;</h4></center> <p>" );
+                   $("#api_result").append( " <center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
                    for( x in data1.response.suggestions)
                    {       
                            console.log(data1.response.suggestions[x].suggestion);
 
-                           $("#api_result").append( "<div class='col s12 l12' ><p  ><center>" +  data1.response.suggestions[x].suggestion + "</center></p></div>" );
+                           $("#api_result").append( "<a href='#!' class='collection-item'>" +  data1.response.suggestions[x].suggestion + "</a>" );
                    }
                 //   console.log(data1.response.suggestions[0]);
               })
@@ -88,20 +88,24 @@
             });
 
 
-
-
-
-
-
           </script>
            
 
         </div>
 
       </div>
-      <div class="row" id="api_result">
-
-           </div>
+<div class="row">
+<div class="col l4 s4">.</div>
+<div class="col l4 s4">
+      <div class="collection" id="api_result">
+  
+      </div>
+      </div>
+</div>
+      
+          
+          
+           
     </div>
 
 
