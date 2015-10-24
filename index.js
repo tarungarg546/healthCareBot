@@ -6,7 +6,33 @@ require('./config/express')(app);
 var baseRoute=require('./routes');
 app.use('/',baseRoute);
 var users={};//username will be the key and value will be corresponding socket
-io.sockets.on('connection',function(socket){
+var doc={};
+var chat = io.of('/doctor').on('connection', function (socket) {
+        socket.on('newUser',function(data,callback){
+        	callback(true);
+        	socket.name=data;
+			users[socket.name]=socket;
+			doc[socket.name]=socket;
+			//console.log(users[socket.name]);
+			updateNames();
+        });
+		socket.on('disconnect',function(data){
+			console.log('User died');
+			if(!socket.name)//when the user has no name 
+					return;
+			delete users[socket.name];
+			if(doc[socket.name])
+				delete doc[socket.name];
+			updateNames();
+		});
+		function updateNames(){
+        	console.log(Object.keys(doc));
+			io.of('/client').emit('usernames',Object.keys(doc));//sending socket does not make sense
+			io.of('/doctor').emit('usernames',Object.keys(doc));//sending socket does not make sense
+		}
+});
+ 
+io.of('/client').on('connection',function(socket){
 	//console.log('New User Connected',socket);
 	socket.on('newUser',function(data,callback){
 		console.log('Checking username....');
@@ -20,12 +46,12 @@ io.sockets.on('connection',function(socket){
 			callback(true);
 			socket.name=data;
 			users[socket.name]=socket;
-			console.log(users[socket.name]);
+			//console.log(users[socket.name]);
 			updateNames();
 		}
 	});
 	socket.on('newMessage',function(data,callback){
-		//console.log(data);
+		console.log(data);
 		var msg=data.trim();
 		if(msg[0]=='@')//if thats whisper or private msg
 		{
@@ -36,14 +62,14 @@ io.sockets.on('connection',function(socket){
 				//check the username is valid
 				var name=msg.substr(0,idx);
 				msg=msg.substr(idx+1);
-				if(name in users)
+				if(name in doc)
 				{
-					users[name].emit('whisper',{msg:msg,nick:socket.name});
+					doc[name].emit('whisper',{msg:msg,nick:socket.name});
 					console.log('whispered');	
 				}
 				else
 				{
-					callback('Error! Enter a valid user');
+					callback('Error! You can only send a private msg to doctor');
 				}	
 			}
 			else//no actual msg part
@@ -52,20 +78,24 @@ io.sockets.on('connection',function(socket){
 			}
 		}
 		else{
-			io.sockets.emit('newmessage',{msg:msg,nick:socket.name});//broadcast to everyone and i too can see the msg
+			io.of('/client').emit('newmessage',{msg:msg,nick:socket.name});//broadcast to everyone and i too can see the msg
 		}
 
 	});
-	function updateNames(){
-		//console.log('Here');
-		//console.log(Object.keys(users));
-		io.sockets.emit('usernames',Object.keys(users));//sending socket does not make sense
-	}
 	socket.on('disconnect',function(data){
 		console.log('User died');
 		if(!socket.name)//when the user has no name 
 				return;
 		delete users[socket.name];
+		if(doc[socket.name])
+			delete doc[socket.name];
 		updateNames();
 	});
+
+	function updateNames(){
+		//console.log('Here');
+		console.log(Object.keys(users));
+		io.of('/client').emit('usernames',Object.keys(doc));//sending socket does not make sense
+		io.of('/doctor').emit('usernames',Object.keys(doc));
+	}
 });

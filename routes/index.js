@@ -19,5 +19,8 @@ router.get('/chatWithDoctor',function(req,res){
 router.get('/chatBot',function(req,res){
 	res.render('chatBot');
 });
+router.get('/secretDoctor',function(req,res){
+	res.render('secretDoctor');
+});
 router.post('/request',user.requestAmbulance);
 module.exports = router;
