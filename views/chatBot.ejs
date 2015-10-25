@@ -18,152 +18,74 @@
 </head>
 <body>
   <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img src="images/logo.png"></a>
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="/" class="brand-logo">
+        <img src="images/logo.png">
+      </a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
+        <li>
+          <a href="/chatWithDoctor">Consult A Doctor</a>
+        </li>
       </ul>
-
       <ul id="nav-mobile" class="side-nav">
-        <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
+        <li>
+          <a href="/chatWithDoctor">Consult A Doctor</a>
+        </li>
       </ul>
-
-
-
-    </li>
-  </ul>
-
-  <ul class="right hide-on-med-and-down">
-    <li><a href="/callAmbulance">Call Ambulance</a></li>
-  </ul>
-
-  <ul id="nav-mobile" class="side-nav">
-    <li><a href="/callAmbulance">Call Ambulance</a></li>
-  </ul>
-  <ul class="right hide-on-med-and-down">
-    <li><a href="/chatBot">Medicine Recommendations Bot</a></li>
-  </ul>
-
-  <ul id="nav-mobile" class="side-nav">
-    <li><a href="/chatWithBot">Medicine Recommendations Bot</a></li>
-  </ul>
-  <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-</div>
-</nav>
-
-
-
-<div class="container">
-
-  <div class="row">
-    <center><h4><i class="material-icons">android</i>&nbsp;Hi! I'm Your Medical Bot&nbsp;<i class="material-icons">android</i></h4>
-      <div class="col l4 s4">.</div>
-      <div class="col l4 s4">
-
-        <form id="target"><input    type="text" id="query" placeholder="What Illness Are You Feeling Today?" class="validate">
-          <button class="btn waves-effect waves-light" type="submit">Suggest Me Medicine</button></form></center>
-          <script type="text/javascript">
-
-          $("#target" ).submit(function( event ) {
-          
-            event.preventDefault();
-              $("#api_result").children().remove();
-              $("#hospital_result").children().remove();
-
-              var disease = $("#query").val();
-              $.get("api_request" , { "data" : disease} , function( data , status){
-
-                //   console.log( data );
-                   var data1 = JSON.parse(data);
-                   data1=JSON.parse(data1);
-
-                   $("#api_result").append( " <center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
-                   for( x in data1.response.suggestions)
-                   {       
-                           console.log(data1.response.suggestions[x].suggestion);
-
-                           $("#api_result").append( "<a href='#!' class='collection-item'>" +  data1.response.suggestions[x].suggestion + "</a>" );
-                   }
-                //   console.log(data1.response.suggestions[0]);
-              })
-
-            
-            });
-
-
-
-
-          $("#findHospital" ).submit(function( event ) {
-          
-            event.preventDefault();
-              $("#hospital_result").children().remove();
-              $("#api_result").children().remove();
-
-              var  city = $("#city").val();
-              var geocoder = new google.maps.Geocoder();
-              var address = city;
-
-              geocoder.geocode( { 'address': address}, function(results, status) {
-
-                if (status == google.maps.GeocoderStatus.OK) {
-                   var latitude = results[0].geometry.location.lat();
-                   var longitude = results[0].geometry.location.lng();
-               // alert("lat = " + latitude + "\n" + "long = " + longitude);
-
-                    var location = latitude+ "," + longitude;
-
-                   var url =  "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location= "
-                      + location
-                      + "&radius=500&types=hospital&key=AIzaSyDhooyBMw1gHS96ZH6Wpnf4XZdEj8NBiW0"
-                      $.get( url  , function( data , status){
-
-                        //   console.log( data );
-                         var data1 = JSON.parse(data);
-                          data1=JSON.parse(data1);
-
-                          $("#hospital_result").append( " <center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
-                          for( x in data1.response.suggestions)
-                          {       
-                           console.log(data1.response.suggestions[x].suggestion);
-
-                           $("#api_result").append( "<a href='#!' class='collection-item'>" +  data1.response.suggestions[x].suggestion + "</a>" );
-                           }
-                //   console.log(data1.response.suggestions[0]);
-              })
-
-            
-            });
-                 } 
-              });
-              
-
-
-
-          </script>
-           
-
-        </div>
-
-      </div>
-<div class="row">
-<div class="col l4 s4">.</div>
-<div class="col l4 s4">
-      <div class="collection" id="api_result">
-  
-      </div>
-      </div>
-</div>
-      
-          
-          
-           
+      <ul class="right hide-on-med-and-down">
+        <li>
+          <a href="/callAmbulance">Call Ambulance</a>
+        </li>
+      </ul>
+      <ul id="nav-mobile" class="side-nav">
+        <li>
+          <a href="/callAmbulance">Call Ambulance</a>
+        </li>
+      </ul>
+      <ul class="right hide-on-med-and-down">
+        <li>
+          <a href="/chatBot">Medicine Recommendations Bot</a>
+        </li>
+      </ul>
+      <ul id="nav-mobile" class="side-nav">
+        <li>
+          <a href="/chatWithBot">Medicine Recommendations Bot</a>
+        </li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
+  </nav>
 
+  <div class="container">
+    <div class="row">
+      <center>
+        <h4>
+          <i class="material-icons">android</i>
+          &nbsp;Hi! I'm Your Medical Bot&nbsp;
+          <i class="material-icons">android</i>
+        </h4>
+        <div class="col l4 s4">.</div>
+        <div class="col l4 s4">
+          <form id="target">
+            <input    type="text" id="query" placeholder="What illness Are You Feeling Today?" class="validate">
+            <button class="btn waves-effect waves-light" type="submit">Suggest Me Medicine</button>
+          </form>
+        </div>
+      </center>  
+    </div>
+  </div>
+  <div class="row">
+    <div class="col l4 s4">.</div>
+    <div class="col l4 s4">
+      <div class="collection" id="api_result">
+      </div>
+    </div>
+  </div>
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script type="text/javascript" src='js/bot.js'></script>
 
-
-    <!--  Scripts-->
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="js/materialize.js"></script>
-    <script src="js/init.js"></script>
-
-  </body>
-  </html>
+</body>
+</html>
