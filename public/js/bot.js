@@ -36,6 +36,7 @@ function changeUI(data){
 $("#target").submit(function(ev){    
   ev.preventDefault();
   $("#api_result").children().remove();
+  $("#api_result").append("<center><img src='images/loader.gif' id='load' style='display:inline;'></center>");
   $("#hospital_result").children().remove();
   var disease = $("#query").val();
   var suggestions=generateSuggestion(disease);
@@ -48,7 +49,7 @@ $("#target").submit(function(ev){
   $.get("api_request",{"data":disease},function( data , status){
     var data1 = JSON.parse(data);
     data1=JSON.parse(data1);
-
+    $("#load").css('display','none');
     $("#api_result").append( "<center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
     for( x in data1.response.suggestions){
       //console.log(data1.response.suggestions[x].suggestion);
