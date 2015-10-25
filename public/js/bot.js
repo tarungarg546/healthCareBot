@@ -1,15 +1,57 @@
-$("#target" ).submit(function(ev){    
+var generateSuggestion=function(disease){
+  var length=disease.length;
+  var res=[];
+  if(disease[length-1]=='s')
+  {
+    var orig=disease.substr(0,length-1);
+    res.push(orig);
+    res.push(orig+'ing');
+    res.push(orig+'ed');
+  }
+  else if(disease[length-1]=='g' && disease[length-2]=='n' && disease[length-3]=='i'){
+    var orig=disease.substr(0,length-3);
+    res.push(orig);
+    res.push(orig+'ed');
+    res.push(orig+'s');
+  }
+  else if(disease[length-1]=='d' && disease[length-2]=='e'){
+    var orig=disease.substr(0,length-2);
+    res.push(disease.substr(0,length-2));
+    res.push(orig+'s');
+    res.push(orig+'ing');
+  }
+  else
+  {
+    res.push(disease+'s');
+    res.push(disease+'ing');
+    res.push(disease+'ed');
+  }
+  return res;
+};
+function changeUI(data){
+  console.log(data);
+  $('#query').val(data);
+  $('#target').submit();
+}
+$("#target").submit(function(ev){    
   ev.preventDefault();
   $("#api_result").children().remove();
   $("#hospital_result").children().remove();
   var disease = $("#query").val();
+  var suggestions=generateSuggestion(disease);
+  //console.log(sugg);
+  $('#sugg').html(' ');
+  $('#sugg').append('You might be interested in :- ');
+  suggestions.forEach(function(value,idx){
+    $('#sugg').append('<div class="chip" data-val="'+value+'" onclick="changeUI(\''+value+'\')">'+value+'</div>');  
+  });
   $.get("api_request",{"data":disease},function( data , status){
     var data1 = JSON.parse(data);
     data1=JSON.parse(data1);
 
-    $("#api_result").append( " <center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
+    $("#api_result").append( "<center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
     for( x in data1.response.suggestions){
-      console.log(data1.response.suggestions[x].suggestion);
+      //console.log(data1.response.suggestions[x].suggestion);
       $("#api_result").append( "<a href='#!' class='collection-item'>" +  data1.response.suggestions[x].suggestion + "</a>" );
     }
   });      
