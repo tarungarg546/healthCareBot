@@ -4,12 +4,6 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Call Ambulance</title>
-  <!-- Compiled and minified JavaScript -->
-  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-     <!--Import jQuery before materialize.js-->
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -25,9 +19,6 @@
       <ul id="nav-mobile" class="side-nav">
         <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
       </ul>
-
-
-
 		</li>
       </ul>
 
@@ -134,29 +125,22 @@
           </div>
       </div>
   </div>
-
-
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
-  <script>
-  $( "#patientData" ).hide();
-  $( "#nxtbtn" ).click(function(e) {
-        console.log('cLICKED');
-        e.preventDefault();
-
-        //$( "#patientData" ).css( "visibility", "visible" );
-
-         $('#patientData').show('slow', function() {
-             $( "#nxtbtn" ).hide();
-         });
+</body>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="js/materialize.min.js"></script>
+<script src="js/init.js"></script>
+<script>
+$( "#patientData" ).hide();
+$( "#nxtbtn" ).click(function(e) {
+    console.log('cLICKED');
+    e.preventDefault();
+    $('#patientData').show('slow', function() {
+      $( "#nxtbtn" ).hide();
     });
-    $('#nxtbtn').click(function() {
-      console.log('amb');
-      $('#ambulanceLogo').animate({'marginLeft' : "+=500px"},5000);
-    });
-  </script>
-
-  </body>
+});
+$('#nxtbtn').click(function() {
+  $('#ambulanceLogo').animate({'marginLeft' : "+=500px"},5000);
+});
+</script>
 </html>
