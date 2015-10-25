@@ -9,5 +9,11 @@
 	},
 	"mongoose":{
 		"url":"mongodb://mangoPeople:mangoPeople@ds039504.mongolab.com:39504/cohack"
+	},
+	"twitter":{
+		"consumerKey":"ESd7bNZnsmkf46EXDFO2Asw0T",
+		"consumerSecretKey":"GgJgSi3d5jS4i2fXoxe6TAymLHY44AKNVuUrurph1nnghorZsu",
+		"token":"3700916413-QHgFm2hvXqI8KHZWxFarOaxuza6Zh2jj2sDqkqw",
+		"secretToken":"nvjuqlM5DFMAOp8JOhKk0MUjrt39Ps1FcBKQKgE5r02CG"
 	}
 }

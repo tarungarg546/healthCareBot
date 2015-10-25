@@ -1,19 +1,20 @@
 var mongoose=require('./connect');
+var keys=require('./../keys/keys.json');
 var async=require('async');
 var twitter=require('simple-twitter');
 var nodemailer=require('nodemailer');
-var client=require('twilio')('AC527f6f20315f59a17999fd9eec6ebc93', '031bba489a2f19d928e0ab856f1e1265');
+var client=require('twilio')(keys.twilio.key1,keys.twilio.key2);
 var geonoder=require('geonoder');
-twitter = new twitter('ESd7bNZnsmkf46EXDFO2Asw0T', //consumer key from twitter api
-                       'GgJgSi3d5jS4i2fXoxe6TAymLHY44AKNVuUrurph1nnghorZsu', //consumer secret key from twitter api
-                       '3700916413-QHgFm2hvXqI8KHZWxFarOaxuza6Zh2jj2sDqkqw', //acces token from twitter api
-                       'nvjuqlM5DFMAOp8JOhKk0MUjrt39Ps1FcBKQKgE5r02CG'//acces token secret from twitter api
-                       );
+twitter = new twitter(keys.twitter.consumerKey, //consumer key from twitter api
+                       keys.twitter.consumerSecretKey, //consumer secret key from twitter api
+                       keys.twitter.token, //acces token from twitter api
+                       keys.twitter.secretToken//acces token secret from twitter api
+                      );
 var transporter=nodemailer.createTransport({
     service: 'Gmail',
    	auth: {
-       	user: 'tarungarg546@gmail.com',
-       	pass: 'laxauwftxfcvfwty'
+       	user: keys.gmail.user,
+       	pass: keys.gmail.password
    	}
 });
 var Schema=mongoose.Schema;
