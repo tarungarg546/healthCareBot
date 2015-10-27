@@ -28,16 +28,13 @@ router.get('/secretDoctor/:name',function(req,res){
 router.get('/api_request', function(req, res){
     var disease = req.query.data; 
     var medicine_suggestions = "http://www.truemd.in/api/medicine_suggestions/?id="+ disease +"&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
-    console.log(medicine_suggestions);
-  	request(medicine_suggestions, function (error, response, body) {
+    request(medicine_suggestions, function (error, response, body) {
+      console.log(response.statusCode);
   		if (!error && response.statusCode == 200) {
-    		console.log(" in this")
-   			 console.log(body) // Print the google web page.
-
-   			 res.send(JSON.stringify(body));
+    		res.send(JSON.stringify(body));
  		 }
  		 else{
-    		console.log(error , err);
+    		console.log(error);
  		}
  	 });
 });

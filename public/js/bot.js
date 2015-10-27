@@ -1,31 +1,39 @@
-var generateSuggestion=function(disease){
+//i am trying to ES6 as much as possible
+var findLevenshteinDistance=(B)=>{
+  var A=$('#query').val();
+  A=A.toLowerCase();
+  B=B.toLowerCase();
+  var lengthOfA=A.length,lengthOfB=B.length;
+  //create 2 d array
+  var dp = new Array(lengthOfA);
+  for (var i = 0; i <=lengthOfA; i++) {
+    dp[i] = new Array(lengthOfB);
+  }
+  for(var i=0;i<=lengthOfA;i++)
+  {
+    for(var j=0;j<=lengthOfB;j++)
+    {
+      if(i==0){
+        dp[i][j]=j;//minimum j operation required if frst string is empty
+      }
+      else if(j==0){
+        dp[i][j]=i;
+      }
+      else if(A[i-1]==B[j-1]){
+        dp[i][j]=dp[i-1][j-1];
+      }
+      else{
+        dp[i][j]=1+Math.min(dp[i][j-1],dp[i-1][j],dp[i-1][j-1]);
+      }
+    }
+  }
+  return dp[lengthOfA][lengthOfB]<=3;
+}
+var generateSuggestion=(disease)=>{
   var length=disease.length;
-  var res=[];
-  if(disease[length-1]=='s')
-  {
-    var orig=disease.substr(0,length-1);
-    res.push(orig);
-    res.push(orig+'ing');
-    res.push(orig+'ed');
-  }
-  else if(disease[length-1]=='g' && disease[length-2]=='n' && disease[length-3]=='i'){
-    var orig=disease.substr(0,length-3);
-    res.push(orig);
-    res.push(orig+'ed');
-    res.push(orig+'s');
-  }
-  else if(disease[length-1]=='d' && disease[length-2]=='e'){
-    var orig=disease.substr(0,length-2);
-    res.push(disease.substr(0,length-2));
-    res.push(orig+'s');
-    res.push(orig+'ing');
-  }
-  else
-  {
-    res.push(disease+'s');
-    res.push(disease+'ing');
-    res.push(disease+'ed');
-  }
+  //list of disease might be retreived from database in future but for this use case we decided to keep it limited for testing
+  var listOfDisease=['Dengue','Vomit','Fever','Cough','Cold','Pneumonia','Cancer','Malaria','Typhoid','Swine Flu','Bird Flu','HIV Aids','Aids','Anemia','Asthama','Autism','Blood Clot','Bronchitis','Canine Flu','Chickenpox','Diabetes','Dog Bites','DVT','Down Syndrome','Ebola Virus','Glanders','Gout','Hemophilia','STD','Blood Pressure','BP','High Blood Pressure','HTC','Influenza','Kidney Failure','Kidney Disease','Leprosy','Lice','Lung Cancer','Monkeypox','Myiasis','Polio'];
+  var res=listOfDisease.filter(findLevenshteinDistance);
   return res;
 };
 function changeUI(data){
@@ -46,7 +54,7 @@ $("#target").submit(function(ev){
   suggestions.forEach(function(value,idx){
     $('#sugg').append('<div class="chip" data-val="'+value+'" onclick="changeUI(\''+value+'\')">'+value+'</div>');  
   });
-  $.get("api_request",{"data":disease},function( data , status){
+  /*$.get("api_request",{"data":disease},function( data , status){
     var data1 = JSON.parse(data);
     data1=JSON.parse(data1);
     $("#load").css('display','none');
@@ -55,7 +63,7 @@ $("#target").submit(function(ev){
       //console.log(data1.response.suggestions[x].suggestion);
       $("#api_result").append( "<a href='#!' class='collection-item'>" +  data1.response.suggestions[x].suggestion + "</a>" );
     }
-  });      
+  });*/     
 });
 $("#findHospital" ).submit(function(ev){    
   ev.preventDefault();
