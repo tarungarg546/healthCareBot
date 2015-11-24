@@ -1,9 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-//console.log(router);
-
-var bodyParser=require('body-parser');
 var Cookies = require( "cookies" );
 var mongoose=require('../db/connect');
 var user=require('../db/indexUser');
@@ -29,7 +26,7 @@ router.get('/api_request', function(req, res){
     var disease = req.query.data; 
     var medicine_suggestions = "http://www.truemd.in/api/medicine_suggestions/?id="+ disease +"&key=d29b1e6837deea39d2b59be03671c9&limit=5"; 
     request(medicine_suggestions, function (error, response, body) {
-      console.log(response.statusCode);
+      //console.log(response.statusCode);
   		if (!error && response.statusCode == 200) {
     		res.send(JSON.stringify(body));
  		 }
@@ -40,4 +37,6 @@ router.get('/api_request', function(req, res){
 });
 router.get('/unsubscribe/:id_',user.unsubscribe);
 router.post('/request',user.requestAmbulance);
+router.post('/requestOTP',user.requestOTP);
+router.post('/checkOTP',user.checkOTP);
 module.exports = router;
