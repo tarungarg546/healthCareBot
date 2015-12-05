@@ -54,16 +54,15 @@ $("#target").submit(function(ev){
   suggestions.forEach(function(value,idx){
     $('#sugg').append('<div class="chip" data-val="'+value+'" onclick="changeUI(\''+value+'\')">'+value+'</div>');  
   });
-  /*$.get("api_request",{"data":disease},function( data , status){
+  $.get("api_request",{"data":disease},function( data , status){
     var data1 = JSON.parse(data);
     data1=JSON.parse(data1);
     $("#load").css('display','none');
     $("#api_result").append( "<center><p><i class='material-icons'> android</i>&nbsp;Suggested Medicines</center> <p>" );
     for( x in data1.response.suggestions){
-      //console.log(data1.response.suggestions[x].suggestion);
       $("#api_result").append( "<a href='#!' class='collection-item'>" +  data1.response.suggestions[x].suggestion + "</a>" );
     }
-  });*/     
+  });    
 });
 $("#findHospital" ).submit(function(ev){    
   ev.preventDefault();

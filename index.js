@@ -17,6 +17,7 @@ var chat = io.of('/doctor').on('connection', function (socket) {
         });
         socket.on('newMessage',function(data,callback){
 			var msg=data.trim();
+			var orig=msg;
 			if(msg[0]=='@')//if thats whisper or private msg
 			{
 				msg=msg.substr(1);//start of name onwards
@@ -24,11 +25,12 @@ var chat = io.of('/doctor').on('connection', function (socket) {
 				if(idx!==-1)
 				{
 					//check the username is valid
-					var name=msg.substr(0,idx);
+					var userName=msg.substr(0,idx);
 					msg=msg.substr(idx+1);
-					if(name in users)
+					if(userName in users)
 					{
-						users[name].emit('whisper',{msg:msg,nick:socket.name});
+						socket.emit('newmessage',{msg:orig,nick:socket.name});
+						users[userName].emit('whisper',{msg:msg,nick:socket.name});
 					}
 					else
 					{
@@ -78,6 +80,7 @@ io.of('/client').on('connection',function(socket){
 	});
 	socket.on('newMessage',function(data,callback){
 		var msg=data.trim();
+		var orig=msg;
 		if(msg[0]=='@')//if thats whisper or private msg
 		{
 			msg=msg.substr(1);//start of name onwards
@@ -85,11 +88,12 @@ io.of('/client').on('connection',function(socket){
 			if(idx!==-1)
 			{
 				//check the username is valid
-				var name=msg.substr(0,idx);
+				var docName=msg.substr(0,idx);
 				msg=msg.substr(idx+1);
-				if(name in doc)
+				if(docName in doc)
 				{
-					doc[name].emit('whisper',{msg:msg,nick:socket.name});
+					socket.emit('newmessage',{msg:orig,nick:socket.name});
+					doc[docName].emit('whisper',{msg:msg,nick:socket.name});
 				}
 				else
 				{

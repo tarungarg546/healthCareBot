@@ -17,8 +17,8 @@ router.get('/chatBot',function(req,res){
 	res.render('chatBot');
 });
 router.get('/secretDoctor/:name',function(req,res){
-	var cookies = new Cookies( req, res )
-    , unsigned, signed, tampered;
+	   var cookies = new Cookies( req, res )
+      , unsigned, signed, tampered;
     cookies.set( "doctorName", req.params.name, { httpOnly: false } );
     res.redirect(301,'/chatWithDoctor');
 });
