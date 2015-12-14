@@ -47,11 +47,11 @@ function getOTP(obj){
       else
       {
         document.getElementById('otp').className=document.getElementById('otp').className+' invalid';
-        Materialize.toast('OTP entered is wrong!',5000); 
+        Materialize.toast('OTP entered is wrong!',10000); 
       }
     }
     function wrongOTP(){
-      Materialize.toast('OTP entered is wrong!',5000);
+      Materialize.toast('OTP entered is wrong!',10000);
     }
     $(document).on('click', '#showPatient', function(ev){
         //alert('Yes');
