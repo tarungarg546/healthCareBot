@@ -2,7 +2,7 @@
  [Co-Hack Hackathon]: <http://coworkdelhi.com/cohack/>
 #### WORLD CLASS HOME HEALTHCARE & WELLNESS SERVICES
 
-```sh
+```sh 
 Utilities Added During The Hackathon
 1. Uber For Heathcare Like Service, Which pushes alerts through SMS,Email,Twitter to people around and to nearest hospitals,ambulances to reach out to a person which requires help.
 2. Healthcare Bot, Which suggests you medicines according to your ailment.
@@ -16,7 +16,7 @@ Utilities Added During The Hackathon
 - Materialise CSS
 - Javascript, Jquery
 - JSON
-- TrueMD.in API
+- TrueMD.in API   (NOW NOT AVAILABLE)
 - Socket.io
 - GMail, Twitter, Twilio APIs
 ````
