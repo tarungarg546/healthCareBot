@@ -1,146 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Call Ambulance</title>
-  <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-</head>
-<body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img src="images/logo.png"></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
-      </ul>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Call Ambulance</title>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <style type="text/css">
+      .icon-block {
+        padding: 0 15px;
+      }
+      .icon-block .material-icons {
+        font-size: inherit;
+      }
+      #patientData{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container">
+        <a id="logo-container" href="/" class="brand-logo">
+          <img src="images/logo.png"/>
+        </a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <a href="/chatWithDoctor">Consult A Doctor</a>
+          </li>
+        </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="/chatWithDoctor">Consult A Doctor</a></li>
-      </ul>
-		</li>
-      </ul>
+        <ul id="nav-mobile" class="side-nav">
+          <li>
+            <a href="/chatWithDoctor">Consult A Doctor</a>
+            </li>
+        </ul>
+  		  <ul class="right hide-on-med-and-down">
+          <li>
+            <a href="/callAmbulance">Call Ambulance</a>
+          </li>
+        </ul>
 
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/callAmbulance">Call Ambulance</a></li>
-      </ul>
+        <ul id="nav-mobile" class="side-nav">
+          <li>
+            <a href="/callAmbulance">Call Ambulance</a></li>
+        </ul>
+        <ul class="right hide-on-med-and-down">
+          <li>
+          <a href="/chatBot">Medicine Recommendations Bot</a></li>
+        </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="/callAmbulance">Call Ambulance</a></li>
-      </ul>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="/chatBot">Medicine Recommendations Bot</a></li>
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="/chatWithBot">Medicine Recommendations Bot</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-
-
-
-  <div class="container">
-
+        <ul id="nav-mobile" class="side-nav">
+          <li>
+            <a href="/chatWithBot">Medicine Recommendations Bot</a>
+          </li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+    <div class="container">
       <div class="row">
         <div class="col l12 s12">
-            <img src="images/ambulance.png" id="ambulanceLogo" height="70px">
+          <img src="images/ambulance.png" id="ambulanceLogo" height="70px">
         </div>
+        <form action="/request" method="post">
           <div class="col s5 l5" style="border:0px solid green;margin-right:10px;">
-                <h4>Your Details</h4>
-              <form action="/request" method="post">
+            <h4>Your Details</h4>
             <div class="row">
               <div class="input-field col s6">
                 <input type="text"  id="yourName" name="yourName" class="validate" required>
-                <label for="textarea1">Your Name</label>
+                <label for="yourName">Your Name</label>
               </div>
               <div class="input-field col s6">
                 <input type="text"  id="yourCity" name="yourCity" class="validate" required>
                 <label for="textarea1">Your City</label>
               </div>
             </div>
-
             <div class="row">
               <div class="input-field col s6">
                 <input type="email"  id="yourMail" name="yourMail" class="validate" required>
-                <label for="textarea1">Your Email</label>
+                <label for="yourMail">Your Email</label>
               </div>
               <div class="input-field col s6">
                 <input type="tel" size="10" id="yourPhoneNo" name="yourPhoneNo" class="validate" required>
-                <label for="textarea1">Your Phone No</label>
+                <label for="yourPhoneNo">Your Phone No</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input type="text" id="otp" name="otp" 
+                length="6" disabled="disabled">
+                <label for="otp">Enter OTP</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
-
               </div>
-
               <div class="input-field col s6">
-                <button class="btn waves-effect waves-light" id="nxtbtn">Next
-                    <i class="material-icons right"></i></button>
-
+                <button type="button" class="btn waves-effect waves-light" id="generateOTP">Next
+                    <i class="material-icons right"></i>
+                </button>
               </div>
             </div>
-
           </div>
           <div class="col s6 l6" style="border:0px solid green;" id="patientData" >
-               <h4>Patients Details</h4>
-          <div class="row">
-            <div class="input-field col s6">
-              <input type="text"  id="concernName" name="concernName" class="validate" required>
-              <label for="textarea1">Concern Persons name</label>
+            <h4>Patients Details</h4>
+            <div class="row">
+              <div class="input-field col s6">
+                <input type="text"  id="concernName" name="concernName" 
+                class="validate" required>
+                <label for="concernName">Concern Persons name</label>
+              </div>
+              <div class="input-field col s6">
+                  <input type="tel"  id="concernPhoneNo" name="concernPhoneNo" class="validate">
+                  <label for="concernPhoneNo">Concern Persons Phone</label>
+              </div>
             </div>
-          <div class="input-field col s6">
-              <input type="tel"  id="concernPhoneNo" name="concernPhoneNo" class="validate">
-              <label for="textarea1">Concern Persons Phone</label>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea  id="concernAddress" name="concernAddress"  class="materialize-textarea"></textarea>
+                <label for="concernAddress">Concern Perons Address</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea  id="customMesage" name="customMesage"  class="materialize-textarea"></textarea>
+                <label for="customMessage">Special Request</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+              </div>
+              <div class="input-field col s6">
+                <button type="submit" class="btn waves-effect waves-light" id="submit">
+                    Call Ambulance
+                    <i class="material-icons right"></i>
+                </button>
+              </div>
             </div>
           </div>
-
-          <div class="row">
-
-            <div class="input-field col s12">
-              <textarea  id="concernAddress" name="concernAddress"  class="materialize-textarea"></textarea>
-              <label for="textarea1">Concern Perons Address</label>
-            </div>
-          </div>
-          <div class="row">
-
-            <div class="input-field col s12">
-              <textarea  id="customMesage" name="customMesage"  class="materialize-textarea"></textarea>
-              <label for="textarea1">Special Request</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s6">
-
-            </div>
-            <div class="input-field col s6">
-              <button class="btn waves-effect waves-light" type="submit">Call Ambulance
-                  <i class="material-icons right"></i></button>
-                </form>
-            </div>
-          </div>
-          </div>
-      </div>
-  </div>
-</body>
-<!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.min.js"></script>
-<script src="js/init.js"></script>
-<script>
-$( "#patientData" ).hide();
-$( "#nxtbtn" ).click(function(e) {
-    console.log('cLICKED');
-    e.preventDefault();
-    $('#patientData').show('slow', function() {
-      $( "#nxtbtn" ).hide();
-    });
-});
-$('#nxtbtn').click(function() {
-  $('#ambulanceLogo').animate({'marginLeft' : "+=500px"},5000);
-});
-</script>
+        </form>
+    </div>
+  </body>
+  <!--  Scripts-->
+  <script src="js/otp.js">
+    
+  </script>
 </html>

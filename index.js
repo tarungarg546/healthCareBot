@@ -13,12 +13,11 @@ var chat = io.of('/doctor').on('connection', function (socket) {
         	socket.name=data;
 			users[socket.name]=socket;
 			doc[socket.name]=socket;
-			//console.log(users[socket.name]);
 			updateNames();
         });
         socket.on('newMessage',function(data,callback){
-			console.log(data);
 			var msg=data.trim();
+			var orig=msg;
 			if(msg[0]=='@')//if thats whisper or private msg
 			{
 				msg=msg.substr(1);//start of name onwards
@@ -26,12 +25,12 @@ var chat = io.of('/doctor').on('connection', function (socket) {
 				if(idx!==-1)
 				{
 					//check the username is valid
-					var name=msg.substr(0,idx);
+					var userName=msg.substr(0,idx);
 					msg=msg.substr(idx+1);
-					if(name in users)
+					if(userName in users)
 					{
-						users[name].emit('whisper',{msg:msg,nick:socket.name});
-						console.log('whispered');	
+						socket.emit('newmessage',{msg:orig,nick:socket.name});
+						users[userName].emit('whisper',{msg:msg,nick:socket.name});
 					}
 					else
 					{
@@ -50,7 +49,7 @@ var chat = io.of('/doctor').on('connection', function (socket) {
 			}
 		});
 		socket.on('disconnect',function(data){
-			console.log('User died');
+			//.log('User died');
 			if(!socket.name)//when the user has no name 
 					return;
 			delete users[socket.name];
@@ -59,33 +58,29 @@ var chat = io.of('/doctor').on('connection', function (socket) {
 			updateNames();
 		});
 		function updateNames(){
-        	console.log(Object.keys(doc));
+        	//.log(Object.keys(doc));
 			io.of('/client').emit('usernames',Object.keys(doc));//sending socket does not make sense
 			io.of('/doctor').emit('usernames',Object.keys(doc));//sending socket does not make sense
 		}
 });
  
 io.of('/client').on('connection',function(socket){
-	//console.log('New User Connected',socket);
 	socket.on('newUser',function(data,callback){
-		console.log('Checking username....');
 		if(data in users)//username already exists
 		{
 			callback(false);
 		}
 		else
 		{
-			console.log('New User is genuine ');
 			callback(true);
 			socket.name=data;
 			users[socket.name]=socket;
-			//console.log(users[socket.name]);
 			updateNames();
 		}
 	});
 	socket.on('newMessage',function(data,callback){
-		console.log(data);
 		var msg=data.trim();
+		var orig=msg;
 		if(msg[0]=='@')//if thats whisper or private msg
 		{
 			msg=msg.substr(1);//start of name onwards
@@ -93,12 +88,12 @@ io.of('/client').on('connection',function(socket){
 			if(idx!==-1)
 			{
 				//check the username is valid
-				var name=msg.substr(0,idx);
+				var docName=msg.substr(0,idx);
 				msg=msg.substr(idx+1);
-				if(name in doc)
+				if(docName in doc)
 				{
-					doc[name].emit('whisper',{msg:msg,nick:socket.name});
-					console.log('whispered');	
+					socket.emit('newmessage',{msg:orig,nick:socket.name});
+					doc[docName].emit('whisper',{msg:msg,nick:socket.name});
 				}
 				else
 				{
@@ -116,7 +111,6 @@ io.of('/client').on('connection',function(socket){
 
 	});
 	socket.on('disconnect',function(data){
-		console.log('User died');
 		if(!socket.name)//when the user has no name 
 				return;
 		delete users[socket.name];
@@ -126,8 +120,6 @@ io.of('/client').on('connection',function(socket){
 	});
 
 	function updateNames(){
-		//console.log('Here');
-		console.log(Object.keys(users));
 		io.of('/client').emit('usernames',Object.keys(doc));//sending socket does not make sense
 		io.of('/doctor').emit('usernames',Object.keys(doc));
 	}

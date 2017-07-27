@@ -22,6 +22,7 @@ $(function(){
 			$('.overlay').fadeOut();
 			$('#content').fadeIn();
 			socket.emit('newUser',$.cookie('doctorName'),function(data){
+					$.removeCookie('doctorName');
 					if(data){
 						$('.overlay').fadeOut();
 						$('#content').fadeIn();
